@@ -41,6 +41,7 @@ await fetch("provinces.topojson")
     .then(response => response.json())
     .then(data => {
         let convertedData = topojson.feature(data, data.objects["provinces.geo"])
+
         L.geoJSON(convertedData, {
             style: {
                 color: defaultColor,
@@ -52,8 +53,6 @@ await fetch("provinces.topojson")
             onEachFeature: (feature, layer) => {
                 const province = new Province(feature.properties.NAME, 0, layer);
                 provinces[feature.properties.ID] = province;
-                
-                //layer.bindPopup(`<b>${ JSON.stringify(feature.properties) }</b>`);
                 
                 layer.on("click", (e) => {
                     if (province.color != defaultFillColor) {
